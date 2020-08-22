@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_main_plus"
+        style="@style/main_ll_text"
+        android:text="整数求和" />
+
+
+    <TextView
+        android:id="@+id/tv_main_splicing"
+        style="@style/main_ll_text"
+        android:text="字符串拼接" />
+
+    <TextView
+        android:id="@+id/tv_main_reverse"
+        style="@style/main_ll_text"
+        android:text="字符串反转" />
+
+    <TextView
+        android:id="@+id/tv_main_split"
+        style="@style/main_ll_text"
+        android:text="字符串截取" />
+
+    <TextView
+        android:id="@+id/tv_main_array_critical"
+        style="@style/main_ll_text"
+        android:text="直接字符串指针" />
+    <TextView
+        android:id="@+id/tv_main_array_sum"
+        style="@style/main_ll_text"
+        android:text="遍历数组求和" />
+
+    <TextView
+        android:id="@+id/tv_main_splicing_chinese"
+        style="@style/main_ll_text"
+        android:text="中文字符合并" />
+
+    <TextView
+        android:id="@+id/tv_main_object_array"
+        style="@style/main_ll_text"
+        android:text="获取对象数组内容" />
+
+    <TextView
+        android:id="@+id/tv_main_get_object_array"
+        style="@style/main_ll_text"
+        android:text="获取新的对象数组" />
+
+    <TextView
+        android:text="JNI异常捕获"
+        android:id="@+id/tv_main_exception"
+        style="@style/main_ll_text"
+        />
+</LinearLayout>
