@@ -38,7 +38,7 @@ class BitmapOpsAty : AppCompatActivity() {
         val canvas = Canvas(tempBitmap)
         val paint = Paint()
         paint.style = Paint.Style.FILL
-        paint.color = 0xFF112233.toInt()
+        paint.color = Color.rgb(0x11,0x22,0x33)
         canvas.drawRect(0f, 0f, tempBitmap.width.toFloat(), tempBitmap.height.toFloat(), paint)
 
         val byteSize = tempBitmap.allocationByteCount
@@ -52,8 +52,8 @@ class BitmapOpsAty : AppCompatActivity() {
         val r = Color.red(pixel)
         val g = Color.green(pixel)
         val b = Color.blue(pixel)
-        Log.d("pixel = ", "${pixel}")
-        Log.d("pixel = ", "a= ${a},r= ${r},g=${g}, b=${b}")
+        Log.d("pixel = ", "$pixel")
+        Log.d("pixel = ", "a= ${a},r= ${r},g=${g }, b=${b}")
         Log.d(
             "pixel 16 = ",
             "a= ${a.toString(16)},r= ${r.toString(16)},g=${g.toString(16)}, b=${b.toString(16)}"
@@ -67,27 +67,13 @@ class BitmapOpsAty : AppCompatActivity() {
         img_rotate.setImageBitmap(bitmap)
 
         // 测试。
-        NDKHandler.makeBitmapForSinglePixel(bitmap)
+        NDKHandler.makeBitmapForSinglePixel(tempBitmap)
 
         bt_bitmap_rotate_90.setOnClickListener {
 
             NDKHandler.rotateBitmap(bitmap, ROTATE_90).let {
                 img_rotate.setImageBitmap(it)
             }
-
-//            val result1  = BitmapOps().rotateBitmap(bitmap,ROTATE_180)
-//            val result2  = BitmapOps().rotateBitmap(bitmap,MIRROR)
-//            val dst = Bitmap.createBitmap(
-//                bitmap.width,
-//                bitmap.height,
-//                Bitmap.Config.ARGB_8888
-//            )
-//            val canvas = Canvas(dst)
-//            val matrix = Matrix()
-//            val paint = Paint()
-//            matrix.setRotate(90f, (bitmap.width / 2).toFloat(), (bitmap.height / 2).toFloat())
-//            canvas.drawBitmap(bitmap, matrix, paint)
-
         }
 
 
@@ -107,6 +93,12 @@ class BitmapOpsAty : AppCompatActivity() {
 
         bt_bitmap_bw.setOnClickListener {
             NDKHandler.addBitmapFilter(bitmap).let {
+                img_rotate.setImageBitmap(bitmap)
+            }
+        }
+
+        bt_bitmap_pointer_rotate_90.setOnClickListener {
+            NDKHandler.rotateBitmapWithPointer(bitmap, ROTATE_90).let {
                 img_rotate.setImageBitmap(bitmap)
             }
         }

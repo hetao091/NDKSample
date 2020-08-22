@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import tt.reducto.ndksample.jni.NDKHandler
 import tt.reducto.ndksample.jni.StringTypeOps
 import tt.reducto.ndksample.ui.BitmapOpsAty
 
@@ -15,14 +16,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val tmpStr = "hello from jni中文"
-        val ops = StringTypeOps()
+        val ops = NDKHandler
         val intent = Intent(this, BitmapOpsAty::class.java)
         startActivity(intent)
         //
         // 求和操作就是一般的类型相加的整数
         tv_main_plus.setOnClickListener {
             // 求和操作
-            tv_main_plus.text = ops.plus(10, 10)
+            tv_main_plus.text = ops.intPlus(10, 10)
         }
 
         tv_main_splicing.setOnClickListener {
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         tv_main_exception.setOnClickListener {
             try {
-                ops.exception()
+                ops.testException()
             }
 //            catch (e: Throwable) {
 //                Log.d("tv_main_object_array::","Throwable")

@@ -19,6 +19,8 @@ class BitmapOps : BaseOps() {
 
     // 顺时针旋转 90° 的操作
     external fun rotateBitmap(bitmap: Bitmap, ops: Int): Bitmap
+
+    external fun rotateBitmapWithPointer(bitmap: Bitmap, ops: Int)
     // 滤镜
     external fun addBitmapFilter(bitmap: Bitmap)
 

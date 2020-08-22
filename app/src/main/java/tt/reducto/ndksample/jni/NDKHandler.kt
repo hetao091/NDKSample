@@ -18,7 +18,7 @@ import tt.reducto.ndksample.JniArray
 
 private class NDKOpsCreator {
     companion object {
-        inline fun <reified T : BaseOps> getOps(clz: Class<T>): T? {
+        private inline fun <reified T : BaseOps> getOps(clz: Class<T>): T? {
             var ops: T? = null
             try {
                 // 利用反射获取空构造创建对象
@@ -29,14 +29,26 @@ private class NDKOpsCreator {
             return ops
         }
 
+        /**
+         *
+         */
+        fun createStringOps(): StringTypeOps = getOps(StringTypeOps::class.java)
+            ?: throw NullPointerException("找不到 StringTypeOps() 类")
+
+        /**
+         *
+         */
+        fun createBitmapOps(): BitmapOps = getOps(BitmapOps::class.java)
+            ?: throw NullPointerException("找不到 BitmapOps() 类")
     }
 }
 
 object NDKHandler {
 
-    private val stringOps =
-        NDKOpsCreator.getOps(StringTypeOps::class.java)
-            ?: throw NullPointerException("找不到 StringTypeOps() 类")
+    //
+    private var stringOps: StringTypeOps = NDKOpsCreator.createStringOps()
+    //
+    private val getBitmapOps = NDKOpsCreator.createBitmapOps()
 
     fun intPlus(a: Int, b: Int): String? = stringOps.plus(a, b)
 
@@ -71,18 +83,19 @@ object NDKHandler {
     /**********************************************/
 
 
-
-
     /**********************************************/
 
-    private val getBitmapOps =
-        NDKOpsCreator.getOps(BitmapOps::class.java)?:throw NullPointerException("找不到 BitmapOps() 类")
+
 
     fun rotateBitmap(bitmap: Bitmap, ops: Int): Bitmap =
         getBitmapOps.rotateBitmap(bitmap, ops)
+
+    fun rotateBitmapWithPointer(bitmap: Bitmap, ops: Int) =
+        getBitmapOps.rotateBitmapWithPointer(bitmap, ops)
 
     fun makeBitmapForSinglePixel(bitmap: Bitmap) =
         getBitmapOps.handleBitmapForSinglePixel(bitmap)
 
     fun addBitmapFilter(bitmap: Bitmap) = getBitmapOps.addBitmapFilter(bitmap)
+
 }

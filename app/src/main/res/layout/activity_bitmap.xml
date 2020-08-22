@@ -52,4 +52,16 @@
             android:text="黑白" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/bt_bitmap_pointer_rotate_90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="指针" />
+    </LinearLayout>
+
 </LinearLayout>
