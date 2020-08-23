@@ -46,10 +46,19 @@
 
         <Button
             android:layout_weight="1"
-            android:id="@+id/bt_bitmap_bw"
+            android:id="@+id/bt_bitmap_filter_gray"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="黑白" />
+            android:text="灰度图" />
+
+
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/bt_bitmap_filter_relief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="浮雕图" />
+
     </LinearLayout>
 
     <LinearLayout

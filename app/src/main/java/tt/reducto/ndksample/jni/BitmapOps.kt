@@ -21,5 +21,5 @@ class BitmapOps : BaseOps() {
     external fun rotateBitmap(bitmap: Bitmap, ops: Int): Bitmap
 
     // 滤镜
-    external fun addBitmapFilter(bitmap: Bitmap)
+    external fun addBitmapFilter(bitmap: Bitmap,ops: Int)
 }

@@ -149,7 +149,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_splicingString(JNIEnv *env, jobject 
     jmethodID concat_methodID = env->GetMethodID(String_clazz, "concat",
                                                  "(Ljava/lang/String;)Ljava/lang/String;");
     // 生成 jstring 类型的字符串
-    jstring tmp = env->NewStringUTF(",--- 新的一天，从\"心\"开始");
+    jstring tmp = env->NewStringUTF(",--- new string");
     // 实例化java类并传递参数
     jobject str1 = env->CallObjectMethod(str, concat_methodID, tmp);
     const char *chars = env->GetStringUTFChars((jstring) str1, nullptr);

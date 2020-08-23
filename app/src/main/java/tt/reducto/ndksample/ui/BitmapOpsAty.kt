@@ -23,48 +23,67 @@ import java.nio.ByteBuffer
  * @author   : hetao
  *
  */
-
 const val ROTATE_90 = 0
 const val ROTATE_180 = 1
 const val MIRROR = 2
 
+const val GRAY_SCALE = 1
+const val RELIEF = 2
+
 class BitmapOpsAty : AppCompatActivity() {
+
+    private val ops = NDKHandler
+    private lateinit var bitmap:Bitmap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bitmap)
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image5)
-
+        //
+        setBitmap()
         img_rotate.setImageBitmap(bitmap)
 
 
         bt_bitmap_rotate_90.setOnClickListener {
 
-            NDKHandler.rotateBitmap(bitmap, ROTATE_90).let {
+            ops.rotateBitmap(bitmap, ROTATE_90).let {
                 img_rotate.setImageBitmap(it)
             }
         }
 
 
         bt_bitmap_rotate_180.setOnClickListener {
-            NDKHandler.rotateBitmap(bitmap, ROTATE_180).let {
+            ops.rotateBitmap(bitmap, ROTATE_180).let {
                 img_rotate.setImageBitmap(it)
             }
 
         }
 
         bt_bitmap_mirror.setOnClickListener {
-            NDKHandler.rotateBitmap(bitmap, MIRROR).let {
+            ops.rotateBitmap(bitmap, MIRROR).let {
                 img_rotate.setImageBitmap(it)
             }
 
         }
 
-        bt_bitmap_bw.setOnClickListener {
-            NDKHandler.addBitmapFilter(bitmap).let {
+        bt_bitmap_filter_gray.setOnClickListener {
+            ops.addBitmapFilter(bitmap, GRAY_SCALE).let {
                 img_rotate.setImageBitmap(bitmap)
             }
+            setBitmap()
+        }
+
+        bt_bitmap_filter_relief.setOnClickListener {
+            ops.addBitmapFilter(bitmap, RELIEF).let {
+                img_rotate.setImageBitmap(bitmap)
+            }
+            setBitmap()
         }
 
 
     }
+
+    private fun setBitmap(){
+        bitmap = BitmapFactory.decodeResource(resources, R.drawable.image5)
+    }
+
+
 }

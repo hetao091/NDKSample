@@ -90,6 +90,6 @@ object NDKHandler {
     fun rotateBitmap(bitmap: Bitmap, ops: Int): Bitmap =
         getBitmapOps.rotateBitmap(bitmap, ops)
 
-    fun addBitmapFilter(bitmap: Bitmap) = getBitmapOps.addBitmapFilter(bitmap)
+    fun addBitmapFilter(bitmap: Bitmap,ops: Int) = getBitmapOps.addBitmapFilter(bitmap,ops)
 
 }

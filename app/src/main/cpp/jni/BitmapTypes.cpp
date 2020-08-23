@@ -193,14 +193,13 @@ Java_tt_reducto_ndksample_jni_BitmapOps_rotateBitmap(JNIEnv *env, jobject thiz, 
     }
 
 
-
-
 }
 extern "C"
 JNIEXPORT void JNICALL
-Java_tt_reducto_ndksample_jni_BitmapOps_addBitmapFilter(JNIEnv *env, jobject thiz, jobject bitmap) {
+Java_tt_reducto_ndksample_jni_BitmapOps_addBitmapFilter(JNIEnv *env, jobject thiz, jobject bitmap,
+                                                        jint ops) {
     if (bitmap == nullptr) {
-        LOGD("rotateBitmap - the  bitmap is null ")
+        LOGD("addBitmapFilter - the  bitmap is null ")
     }
 
     // 检索获取bitmap信息
@@ -233,30 +232,72 @@ Java_tt_reducto_ndksample_jni_BitmapOps_addBitmapFilter(JNIEnv *env, jobject thi
     int a, r, g, b;
     // 不操作A
     // 遍历从 Bitmap 内存 addrPtr 中读取 BGRA 数据, 然后向 data 内存存储 BGR 数据
-    for (int y = 0; y < mHeight; ++y) {
 
-        for (int x = 0; x < mWidth; ++x) {
-            // 这里定义成void,方便后续操作
-            void *pixel = nullptr;
-            // 24位
-            if (bitmapInfo.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
-                // 移动像素指针
-                pixel = pixelArr + y * mWidth + x;
-                //按照ABGR存储序列取值  获取指针对应的值
-                uint32_t v = *((uint32_t *) pixel);
-                a = BGR_8888_A(v);
-                r = BGR_8888_R(v);
-                g = BGR_8888_G(v);
-                b = BGR_8888_B(v);
 
-                // 平均值法
-//                int sum = (r + g + b) / 3;
-                //或者加权平均值法
-                int sum = (int)(r * 0.3 + g * 0.59 + b * 0.11);
-
-                *((uint32_t *) pixel) = MAKE_ABGR(a, sum, sum, sum);
+    switch (ops) {
+        // 灰度图
+        case 1: {
+            for (int y = 0; y < mHeight; ++y) {
+                for (int x = 0; x < mWidth; ++x) {
+                    // 这里定义成void,方便后续操作
+                    void *pixel = nullptr;
+                    // 24位
+                    if (bitmapInfo.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
+                        // 移动像素指针
+                        pixel = pixelArr + y * mWidth + x;
+                        //按照ABGR存储序列取值  获取指针对应的值
+                        uint32_t v = *((uint32_t *) pixel);
+                        a = BGR_8888_A(v);
+                        r = BGR_8888_R(v);
+                        g = BGR_8888_G(v);
+                        b = BGR_8888_B(v);
+                        // 平均值法
+                        // int sum = (r + g + b) / 3;
+                        //或者加权平均值法
+                        int sum = (int) (r * 0.3 + g * 0.59 + b * 0.11);
+                        *((uint32_t *) pixel) = MAKE_ABGR(a, sum, sum, sum);
+                    }
+                }
             }
+            break;
         }
+            // 浮雕图
+        case 2: {
+            // 减去的效果 一把就是的的
+            // 用当前点的RGB值减去相邻点的RGB值并加上128作为新的RGB值
+            void *pixel = nullptr;
+            void *pixelBefore = nullptr;
+            int  r1, g1, b1;
+            for (int i = 1; i < mWidth * mHeight; ++i) {
+                uint32_t color, colorBefore;
+
+                pixel = pixelArr+i;
+                pixelBefore = pixelArr+i - 1;
+                color = *((uint32_t *) pixel);
+                colorBefore =  *((uint32_t *) pixelBefore);
+                a = BGR_8888_A(color);
+                r = BGR_8888_R(color);
+                g = BGR_8888_G(color);
+                b = BGR_8888_B(color);
+
+                r1 = BGR_8888_R(colorBefore);
+                g1 = BGR_8888_G(colorBefore);
+                b1 = BGR_8888_B(colorBefore);
+
+
+                r = r - r1 + 128;
+                g = g - g1+ 128;
+                b = b - b1 + 128;
+                // 再一次灰度处理
+                int sum = (int) (r * 0.3 + g * 0.59 + b * 0.11);
+                *((uint32_t *)pixelBefore) = MAKE_ABGR(a, sum, sum, sum);
+            }
+            break;
+        }
+
+
+        default:
+            break;
     }
 
     // 释放缓存指针
