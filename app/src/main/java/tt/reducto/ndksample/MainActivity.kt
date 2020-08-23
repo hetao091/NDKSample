@@ -3,6 +3,9 @@ package tt.reducto.ndksample
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import tt.reducto.ndksample.jni.NDKHandler
@@ -12,13 +15,14 @@ import tt.reducto.ndksample.ui.BitmapOpsAty
 
 class MainActivity : AppCompatActivity() {
 
+    private val tmpStr = "hello from jni中文"
+    private val ops = NDKHandler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val tmpStr = "hello from jni中文"
-        val ops = NDKHandler
-        val intent = Intent(this, BitmapOpsAty::class.java)
-        startActivity(intent)
+
+
         //
         // 求和操作就是一般的类型相加的整数
         tv_main_plus.setOnClickListener {
@@ -90,4 +94,28 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.menu_main_to_bitmap -> {
+                val intent = Intent(this, BitmapOpsAty::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.help -> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }

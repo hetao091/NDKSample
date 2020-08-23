@@ -34,40 +34,8 @@ class BitmapOpsAty : AppCompatActivity() {
         setContentView(R.layout.activity_bitmap)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.image5)
 
-        val tempBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(tempBitmap)
-        val paint = Paint()
-        paint.style = Paint.Style.FILL
-        paint.color = Color.rgb(0x11,0x22,0x33)
-        canvas.drawRect(0f, 0f, tempBitmap.width.toFloat(), tempBitmap.height.toFloat(), paint)
-
-        val byteSize = tempBitmap.allocationByteCount
-        val byteBuffer: ByteBuffer = ByteBuffer.allocateDirect(byteSize)
-        tempBitmap.copyPixelsToBuffer(byteBuffer)
-        byteBuffer.rewind()
-        val out = ByteArray(4)
-        byteBuffer[out, 0, out.size]
-        val pixel = tempBitmap.getPixel(0, 0)
-        val a = Color.alpha(pixel)
-        val r = Color.red(pixel)
-        val g = Color.green(pixel)
-        val b = Color.blue(pixel)
-        Log.d("pixel = ", "$pixel")
-        Log.d("pixel = ", "a= ${a},r= ${r},g=${g }, b=${b}")
-        Log.d(
-            "pixel 16 = ",
-            "a= ${a.toString(16)},r= ${r.toString(16)},g=${g.toString(16)}, b=${b.toString(16)}"
-        )
-        for (element in out) {
-            Log.d("out old= ", "$element")
-            Log.d("out = ", element.toString(16))
-        }
-
-
         img_rotate.setImageBitmap(bitmap)
 
-        // 测试。
-        NDKHandler.makeBitmapForSinglePixel(tempBitmap)
 
         bt_bitmap_rotate_90.setOnClickListener {
 
@@ -97,11 +65,6 @@ class BitmapOpsAty : AppCompatActivity() {
             }
         }
 
-        bt_bitmap_pointer_rotate_90.setOnClickListener {
-            NDKHandler.rotateBitmapWithPointer(bitmap, ROTATE_90).let {
-                img_rotate.setImageBitmap(bitmap)
-            }
-        }
 
     }
 }
