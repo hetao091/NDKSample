@@ -194,6 +194,8 @@ Java_tt_reducto_ndksample_jni_BitmapOps_rotateBitmap(JNIEnv *env, jobject thiz, 
 
 
 }
+
+
 extern "C"
 JNIEXPORT void JNICALL
 Java_tt_reducto_ndksample_jni_BitmapOps_addBitmapFilter(JNIEnv *env, jobject thiz, jobject bitmap,
@@ -263,7 +265,7 @@ Java_tt_reducto_ndksample_jni_BitmapOps_addBitmapFilter(JNIEnv *env, jobject thi
         }
             // 浮雕图
         case 2: {
-            // 减去的效果 一把就是的的
+
             // 用当前点的RGB值减去相邻点的RGB值并加上128作为新的RGB值
             void *pixel = nullptr;
             void *pixelBefore = nullptr;
