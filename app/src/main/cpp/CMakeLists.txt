@@ -13,13 +13,24 @@ add_library(
         # 要编译的源代码文件
         jni/StringTypes.cpp
         jni/BitmapTypes.cpp
+        jni/YuvTypes.cpp
 )
+# 添加yuv静态库
+add_library(
+        yuv_static
+        STATIC
+        IMPORTED
+        )
 
 # # 引入头文件
-include_directories(include/)
+include_directories(${CMAKE_SOURCE_DIR}/include/)
 
-include_directories(common/)
+include_directories(${CMAKE_SOURCE_DIR}/common/)
 
+include_directories(
+        ${CMAKE_SOURCE_DIR}/yuv/include/
+        ${CMAKE_SOURCE_DIR}/yuv/include/libyuv/
+        )
 
 find_library(
         #
@@ -27,6 +38,10 @@ find_library(
         #
         log)
 
+set_target_properties(
+        yuv_static
+        PROPERTIES IMPORTED_LOCATION
+        /Users/hetao/Documents/newSVNApp/NDKSample/app/src/main/jniLibs/${ANDROID_ABI}/libyuv_static.a)
 
 # 关联 原生库能够调用 log 库中的函数
 target_link_libraries(
@@ -34,6 +49,8 @@ target_link_libraries(
         TTNative
         # 操作bitmap
         jnigraphics
+        #yuv
+        yuv_static
         # 链接log 库
         ${log-lib})
 

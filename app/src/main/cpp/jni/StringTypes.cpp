@@ -11,7 +11,6 @@
 using namespace std;
 
 
-
 // 全局变量作为缓存
 // Java字符串的类和获取方法ID
 jclass gStringClass;
@@ -229,9 +228,8 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_splitString(JNIEnv *env, jobject thi
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_tt_reducto_ndksample_jni_StringTypeOps_splicingStringCritical(JNIEnv *env,
-                                                               jobject thiz,
-                                                               jstring str) {
+Java_tt_reducto_ndksample_jni_StringTypeOps_splicingStringCritical(JNIEnv *env, jobject thiz,
+                                                                   jstring str) {
     const jchar *c_str = nullptr;
     char buf[128] = "cpp ";
     char *pBuff = buf + 4;
@@ -256,7 +254,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_splicingStringCritical(JNIEnv *env,
 extern "C"
 JNIEXPORT jint JNICALL
 Java_tt_reducto_ndksample_jni_StringTypeOps_intArraySum(JNIEnv *env, jobject thiz,
-                                                    jintArray int_array) {
+                                                        jintArray int_array) {
     // 声明
     jint *intArray;
     //
@@ -293,8 +291,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_intArraySum(JNIEnv *env, jobject thi
  */
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_tt_reducto_ndksample_jni_StringTypeOps_reverseString(JNIEnv *env,
-                                                      jobject thiz, jstring str) {
+Java_tt_reducto_ndksample_jni_StringTypeOps_reverseString(JNIEnv *env, jobject thiz, jstring str) {
 
     jsize mSize = env->GetStringLength(str);
     // 直接指向 Unicode 编码的字符串的指针
@@ -317,7 +314,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_reverseString(JNIEnv *env,
 extern "C"
 JNIEXPORT jbyteArray JNICALL
 Java_tt_reducto_ndksample_jni_StringTypeOps_chineseString(JNIEnv *env, jobject thiz,
-                                                      jstring str) {
+                                                          jstring str) {
 
 //    jsize len =  env->GetArrayLength(byte_array);
 //
@@ -357,7 +354,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_chineseString(JNIEnv *env, jobject t
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_tt_reducto_ndksample_jni_StringTypeOps_getObjectArrayElement(JNIEnv *env, jobject thiz,
-                                                              jobjectArray jni_array) {
+                                                                  jobjectArray jni_array) {
     jobject arr;
     // 数组长度
     int size = env->GetArrayLength(jni_array);
@@ -468,7 +465,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_getNewObjectArray(JNIEnv *env, jobje
         if (cls == nullptr) {
             return nullptr;
         }
-    } else{
+    } else {
         LOGD("use GlobalRef cached")
     }
 
@@ -489,7 +486,7 @@ Java_tt_reducto_ndksample_jni_StringTypeOps_getNewObjectArray(JNIEnv *env, jobje
     }
     char buf[64];
     for (int i = 0; i < size; ++i) {
-        sprintf(buf,"%d",i);
+        sprintf(buf, "%d", i);
         //
         jstring nameStr = env->NewStringUTF(buf);
         // 创建
